@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My PLE Mind Map</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Raleway:wght@800;900&display=swap" rel="stylesheet"/>
+
+  <style>
+
+    /* ============================================================
+       🎨 ZONA 1 — COLORES
+       ¡CÁMBIA ESTOS COLORES A LOS QUE MÁS TE GUSTEN!
+       Puedes buscar colores en: https://coolors.co
+    ============================================================ */
+
+    :root {
+      --color-fondo:        #000000;   /* 🖤 fondo de la página        */
+      --color-centro:       #6378f1;   /* 🟣 nodo central              */
+      --color-texto-centro: #ffffff;   /* ⚪ texto del nodo central     */
+
+      /* — Rama 1: Learning Strategies — */
+      --rama1-color:        #f50bf5;   /* 🟡 color de la rama 1        */
+      --rama1-texto:        #8ef3da;   /* texto sobre la rama 1        */
+
+      /* — Rama 2: ICT Tools — */
+      --rama2-color:        #10b978;   /* 🟢 color de la rama 2        */
+      --rama2-texto:        #ffffff;
+
+      /* — Rama 3: Work Context — */
+      --rama3-color:        #cef63b;   /* 🔵 color de la rama 3        */
+      --rama3-texto:        #ffffff;
+
+      /* — Rama 4: Personal Goals — */
+      --rama4-color:        #f55211;   /* 🔴 color de la rama 4        */
+      --rama4-texto:        #ffffff;
+
+      --linea-color:        rgba(255, 255, 255, 0.15); /* color de las líneas */
+      --fuente:             'Nunito', sans-serif;
+    }
+
+    /* ============================================================
+       ⚙️ ESTILOS BASE — No necesitas cambiar esto
+    ============================================================ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--color-fondo);
+      font-family: var(--fuente);
+      min-height: 100vh;
+      padding: 40px 20px 60px;
+    }
+
+    /* — Encabezado — */
+    .page-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .page-header h1 {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: .04em;
+    }
+
+    /* ============================================================
+       ✏️ ZONA 2 — TU NOMBRE Y TÍTULO
+       Cambia esto en el HTML de abajo (busca los comentarios ✏️)
+    ============================================================ */
+
+    .author-tag {
+      display: inline-block;
+      margin-top: 8px;
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.6);
+      font-size: .75rem;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+      letter-spacing: .06em;
+    }
+
+    /* ============================================================
+       🗺️ MAPA MENTAL — Contenedor principal
+    ============================================================ */
+    .mapa {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    /* — Nodo Central — */
+    .nodo-central {
+      background: var(--color-centro);
+      color: var(--color-texto-centro);
+      border-radius: 50%;
+      width: 160px;
+      height: 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: 900;
+      font-size: .95rem;
+      line-height: 1.3;
+      box-shadow: 0 0 0 8px rgba(99,102,241,.25), 0 0 40px rgba(99,102,241,.4);
+      z-index: 10;
+      position: relative;
+    }
+    .nodo-central .emoji { font-size: 1.8rem; margin-bottom: 4px; }
+
+    /* — Línea vertical central — */
+    .linea-v {
+      width: 3px;
+      height: 40px;
+      background: var(--linea-color);
+      margin: 0 auto;
+    }
+
+    /* — Grid de ramas — */
+    .ramas-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      width: 100%;
+      max-width: 960px;
+      position: relative;
+    }
+
+    /* Línea horizontal que conecta el centro con las ramas */
+    .ramas-grid::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 25%; right: 25%;
+      height: 3px;
+      background: var(--linea-color);
+    }
+
+    /* ============================================================
+       🌿 RAMA — estructura base
+       Cada rama tiene: título → subramas → hojas
+    ============================================================ */
+    .rama {
+      background: rgba(255,255,255,.04);
+      border-radius: 20px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,.07);
+      position: relative;
+    }
+
+    /* Colorea el borde superior según la rama */
+    .rama-1 { border-top: 4px solid var(--rama1-color); }
+    .rama-2 { border-top: 4px solid var(--rama2-color); }
+    .rama-3 { border-top: 4px solid var(--rama3-color); }
+    .rama-4 { border-top: 4px solid var(--rama4-color); }
+
+    /* — Título de la rama (Nivel 2) — */
+    .rama-titulo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .rama-titulo .icono {
+      font-size: 1.4rem;
+    }
+    .rama-titulo h2 {
+      font-size: .95rem;
+      font-weight: 900;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      line-height: 1.2;
+    }
+    .rama-titulo h2 span {
+      display: block;
+      font-size: .65rem;
+      font-weight: 600;
+      opacity: .5;
+      text-transform: none;
+      letter-spacing: 0;
+      margin-top: 1px;
+    }
+
+    /* Badge de color en el título */
+    .rama-badge {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .rama-1 .rama-badge { background: var(--rama1-color); }
+    .rama-2 .rama-badge { background: var(--rama2-color); }
+    .rama-3 .rama-badge { background: var(--rama3-color); }
+    .rama-4 .rama-badge { background: var(--rama4-color); }
+
+    /* — Subramas (Nivel 3) — */
+    .subrama {
+      margin-bottom: 12px;
+      padding-left: 12px;
+      border-left: 2px solid rgba(255,255,255,.1);
+    }
+    .subrama-titulo {
+      font-size: .78rem;
+      font-weight: 800;
+      color: rgba(255,255,255,.85);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .subrama-titulo::before {
+      content: '›';
+      font-size: 1rem;
+      opacity: .4;
+    }
+
+    /* — Nivel 4: Detalles — */
+    .detalles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 6px;
+      padding-left: 10px;
+    }
+    .detalle {
+      background: rgba(255,255,255,.07);
+      color: rgba(255,255,255,.7);
+      font-size: .65rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    /* — Nivel 5: Ejemplo personal — */
+    .ejemplo {
+      font-size: .62rem;
+      font-style: italic;
+      color: rgba(255,255,255,.4);
+      padding-left: 10px;
+      line-height: 1.4;
+    }
+    .ejemplo::before { content: '💬 '; }
+
+    /* — Colores de detalle por rama — */
+    .rama-1 .detalle { border-color: rgba(245,158,11,.3); color: #fcd34d; background: rgba(245,158,11,.1); }
+    .rama-2 .detalle { border-color: rgba(16,185,129,.3); color: #6ee7b7; background: rgba(16,185,129,.1); }
+    .rama-3 .detalle { border-color: rgba(59,130,246,.3); color: #93c5fd; background: rgba(59,130,246,.1); }
+    .rama-4 .detalle { border-color: rgba(239,68,68,.3);  color: #fca5a5; background: rgba(239,68,68,.1); }
+
+    /* ============================================================
+       📌 LEYENDA DE NIVELES
+    ============================================================ */
+    .leyenda {
+      margin-top: 40px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 16px;
+      padding: 20px 28px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .leyenda h3 {
+      font-size: .7rem;
+      font-weight: 900;
+      color: rgba(255,255,255,.4);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 14px;
+    }
+    .leyenda-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .leyenda-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .7rem;
+      color: rgba(255,255,255,.6);
+      font-weight: 700;
+    }
+    .leyenda-num {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.1);
+      color: #fff;
+      font-size: .65rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       📱 RESPONSIVE
+    ============================================================ */
+    @media (max-width: 640px) {
+      .ramas-grid { grid-template-columns: 1fr; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+    ✏️ CAMBIA AQUÍ: Título de la página y tu nombre
+  ============================================================ -->
+  <div class="page-header">
+    <h1>🗺️ My Personal growth</h1>
+    <!-- ✏️ Pon tu nombre aquí -->
+    <div class="author-tag">Yeferson Aroyo &nbsp;|&nbsp; English B1.1+</div>
+  </div>
+
+
+  <div class="mapa">
+
+    <!-- ============================================================
+      NIVEL 1 — NODO CENTRAL
+      ✏️ Puedes cambiar el emoji y el texto del centro
+    ============================================================ -->
+    <div class="nodo-central">
+      <div class="emoji">🖥️</div>
+      <!-- ✏️ Cambia este texto -->
+      MY ROUTE
+    </div>
+
+    <div class="linea-v"></div>
+
+    <!-- ============================================================
+      NIVELES 2–5 — LAS 4 RAMAS
+      Estructura de cada rama:
+        Nivel 2 → Título de la rama
+        Nivel 3 → Subrama (tema dentro de la rama)
+        Nivel 4 → Detalles (etiquetas pequeñas)
+        Nivel 5 → Ejemplo personal (frase en inglés)
+    ============================================================ -->
+    <div class="ramas-grid">
+
+
+      <!-- ====================================================
+        🟡 RAMA 1 — LEARNING STRATEGIES
+        ✏️ Cambia los textos, agrega o quita subramas
+      ==================================================== -->
+      <div class="rama rama-1">
+        <div class="rama-titulo">
+          <div class="rama-badge"></div>
+          <div class="icono">📒</div>
+          <h2>
+            ICT learning tools
+            <span>Herramientas de aprendizaje TIC</span>
+          </h2>
+        </div>
+
+           <!-- Subrama 1.1 -->
+        <div class="subrama">
+          <div class="subrama-titulo">Material</div>
+          <div class="detalles">
+            <!-- ✏️ Cambia estas etiquetas (Nivel 4) -->
+            <span class="detalle">Books</span>
+            <span class="detalle">Videos</span>
+            <span class="detalle">Notebook</span>
+            <span class="detalle">Google drive</span>
+            <span class="detalle">Office 365</span>
+          </div>
+          <!-- ✏️ Escribe tu ejemplo personal (Nivel 5) -->
+          <div class="ejemplo">I read books and listen to videos.</div>
+        </div>
+
+        
+        <!-- Subrama 1.2 -->
+        <div class="subrama">
+          <div class="subrama-titulo">Seeing</div>
+          <div class="detalles">
+            <span class="detalle">Notebook</span>
+            <span class="detalle">Movies subtitles</span>
+            <span class="detalle">Videos subtitles</span>
+            <span class="detalle">Documentation web</span>
+            <span class="detalle">Podcasts</span>
+
+          </div>
+          <div class="ejemplo">I write notes and seeing subtitles every day</div>
+        </div>
+
+        <!-- Subrama 1.3 -->
+        <div class="subrama">
+          <div class="subrama-titulo">Apps practice</div>
+          <div class="detalles">
+            <span class="detalle">Duolingo</span>
+            <span class="detalle">Gemini</span>
+            <span class="detalle">Else speak</span>
+            <span class="detalle">Coddy</span>
+            <span class="detalle">CoddyHS</span>
+
+          </div>
+          <div class="ejemplo">I practice english in apps every day.</div>
+        </div>
+
+       <!-- Subrama 1.4 -->
+        <div class="subrama">
+          <div class="subrama-titulo">Reading Documentation</div>
+          <div class="detalles">
+            <span class="detalle">MDN web docs</span>
+            <span class="detalle">docs.python.org</span>
+            <span class="detalle">DevDocs.io</span>
+            <span class="detalle">W3Schools</span>
+          </div>
+          <div class="ejemplo">sometimes look for documentation.</div>
+        </div> 
+      </div><!-- /rama-1 -->
+
+
+      <!-- ====================================================
+        🟢 RAMA 2 — ICT TOOLS
+        ✏️ Cambia los textos, agrega o quita subramas
+      ==================================================== -->
+      <div class="rama rama-2">
+        <div class="rama-titulo">
+          <div class="rama-badge"></div>
+          <div class="icono">🖥️</div>
+          <h2>
+            Work ecosystem 
+            <span>Ecosistema de trabajo</span>
+          </h2>
+        </div>
+
+        <!-- Subrama 2.1 -->
+        <div class="subrama">
+          <div class="subrama-titulo">Project management</div>
+          <div class="detalles">
+            <span class="detalle">Trello</span>
+            <span class="detalle">Jira</span>
+            <span class="detalle">Notion</span>
+            <span class="detalle">Basecamp</span>
+            <span class="detalle">ClickUp</span>
+
+          </div>
+          <div class="ejemplo">If i need it, i use it.</div>
+        </div>
+
+        <!-- Subrama 2.2 -->
+        <div class="subrama">
+          <div class="subrama-titulo">Community</div>
+          <div class="detalles">
+            <span class="detalle">Discord</span>
+            <span class="detalle">Teams</span>
+            <span class="detalle">Reddit</span>
+            <span class="detalle">WhatsApp</span>
+            <span class="detalle">Stack Overflow</span>
+
+          </div>
+          <div class="ejemplo">I belong to many communities.</div>
+        </div>
+
+        <!-- Subrama 2.3 -->
+        <div class="subrama">
+          <div class="subrama-titulo">Programming languages</div>
+          <div class="detalles">
+            <span class="detalle">Python</span>
+            <span class="detalle">JavaScript</span>
+            <span class="detalle">C++</span>
+            <span class="detalle">SQL</span>
+            <span class="detalle">PHP</span>
+
+          </div>
+          <div class="ejemplo">A little practice in Python and JavaScript programming</div>
+        </div>
+
+        <!-- Subrama 2.4 -->
+        <div class="subrama">
+          <div class="subrama-titulo">Word tools</div>
+          <div class="detalles">
+            <span class="detalle">Laptop</span>
+            <span class="detalle">Desk</span>
+            <span class="detalle">Chair</span>
+            <span class="detalle">Phone</span>
+            <span class="detalle">EARPHONES</span>
+            
+          </div>
+          <div class="ejemplo">I use it these tools every day</div>
+        </div>
+      </div><!-- /rama-2 -->
+
+
+      <!-- ====================================================
+        🔵 RAMA 3 — WORK CONTEXT
+        ✏️ Cambia los textos, agrega o quita subramas
+      ==================================================== -->
+      <div class="rama rama-3">
+        <div class="rama-titulo">
+          <div class="rama-badge"></div>
+          <div class="icono">🔋</div>
+          <h2>
+            Energy management
+            <span>Gestión de energia</span>
+          </h2>
+        </div>
+
+        <!-- Subrama 3.1 -->
+        <div class="subrama">
+          <div class="subrama-titulo">Feeding</div>
+          <div class="detalles">
+            <span class="detalle">Vegetables</span>
+            <span class="detalle">Carbohydrates</span>
+            <span class="detalle">Flours</span>
+            <span class="detalle">Fruit</span>
+            <span class="detalle">Fats</span>
+          </div>
+          <div class="ejemplo">I consume two portions per day, for example vegetables and carbohydrates.</div>
+        </div>
+
+        <!-- Subrama 3.2 -->
+        <div class="subrama">
+          <div class="subrama-titulo">Hydration</div>
+          <div class="detalles">
+            <span class="detalle">Water</span>
+            <span class="detalle">Electrolytes</span>
+            <span class="detalle">Juice</span>
+            <span class="detalle">Broth</span>
+            <span class="detalle">Sports drinking</span>
+          </div>
+          <div class="ejemplo">I drink at least five glasses of water per day.</div>
+        </div>
+
+        <!-- Subrama 3.3 -->
+        <div class="subrama">
+          <div class="subrama-titulo">Rest</div>
+          <div class="detalles">
+            <span class="detalle">Active breaks</span>
+            <span class="detalle">Rest periods</span>
+            <span class="detalle">seven hours of sleep</span>
+             <span class="detalle">Digital disconnection</span>
+              <span class="detalle">change of activity </span>
+          </div>
+          <div class="ejemplo">I take active breaks and disconnect from digital devices during my rest periods.</div>
+        </div>
+
+        <!-- Subrama 3.4 -->
+        <div class="subrama">
+          <div class="subrama-titulo">Time management</div>
+          <div class="detalles">
+            <span class="detalle">Set schedules</span>
+            <span class="detalle">Rotating activities</span>
+            <span class="detalle">Note on the day's activities</span>
+             <span class="detalle">Digital calendar</span>
+              <span class="detalle">Kanban boards</span>
+          </div>
+          <div class="ejemplo">I set schedules and rotate my activities to manage my time effectively.</div>
+        </div>
+      </div><!-- /rama-3 -->
+
+
+      <!-- ====================================================
+        🔴 RAMA 4 — PERSONAL GOALS
+        ✏️ Cambia los textos, agrega o quita subramas
+      ==================================================== -->
+      <div class="rama rama-4">
+        <div class="rama-titulo">
+          <div class="rama-badge"></div>
+          <div class="icono">🧮</div>
+          <h2>
+            Learning strategy
+            <span>Estrategia de aprendizaje</span>
+          </h2>
+        </div>
+
+        <!-- Subrama 4.1 -->
+        <div class="subrama">
+          <div class="subrama-titulo">Study methodology</div>
+          <div class="detalles">
+            <span class="detalle">Active recall </span>
+            <span class="detalle">Spaced repetition</span>
+            <span class="detalle">Project-based learning</span>
+            <span class="detalle">Constant practice</span>
+            <span class="detalle">Review notes</span>
+          </div>
+          <div class="ejemplo">My study methodology involves active recall and spaced repetition.</div>
+        </div>
+
+        <!-- Subrama 4.2 -->
+        <div class="subrama">
+          <div class="subrama-titulo">Lifestyle and environment</div>
+          <div class="detalles">
+            <span class="detalle">Habit stacking</span>
+            <span class="detalle">Essentialism</span>
+            <span class="detalle">Household organization</span>
+            <span class="detalle">Organized desk</span>
+            <span class="detalle">Organized mind</span>
+          </div>
+          <div class="ejemplo">I maintain a organized lifestyle and environment to support my learning.</div>
+        </div>
+
+        <!-- Subrama 4.3 -->
+        <div class="subrama">
+          <div class="subrama-titulo">Social intelligence</div>
+          <div class="detalles">
+            <span class="detalle">Active listening</span>
+            <span class="detalle">Active display</span>
+            <span class="detalle">Reflection of the day</span>
+            <span class="detalle">Interaction</span>
+            <span class="detalle">Empathy</span>
+          </div>
+          <div class="ejemplo">I practice active listening and empathy in my social interactions.</div>
+        </div>
+
+      </div><!-- /rama-4 -->
+
+    </div><!-- /ramas-grid -->
+
+
+    <!-- ============================================================
+      📌 LEYENDA — Explica los 5 niveles del mapa
+      (No necesitas cambiar esto)
+    ============================================================ -->
+    <div class="leyenda">
+      <h3>📌 Structure of this Mind Map — 5 Levels of Bifurcation</h3>
+      <div class="leyenda-items">
+        <div class="leyenda-item">
+          <div class="leyenda-num">1</div>
+          Central node: MY PLE
+        </div>
+        <div class="leyenda-item">
+          <div class="leyenda-num">2</div>
+          Main branches (4 categories)
+        </div>
+        <div class="leyenda-item">
+          <div class="leyenda-num">3</div>
+          Sub-topics per branch
+        </div>
+        <div class="leyenda-item">
+          <div class="leyenda-num">4</div>
+          Detail tags (tools / actions)
+        </div>
+        <div class="leyenda-item">
+          <div class="leyenda-num">5</div>
+          Personal example in English 💬
+        </div>
+      </div>
+    </div>
+
+
+  </div><!-- /mapa -->
+
+</body>
+</html>
